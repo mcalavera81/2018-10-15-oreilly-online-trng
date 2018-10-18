@@ -7,6 +7,7 @@ import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Matt Stine
  */
+@Ignore
 public class InProcessEventSourcedDeliveryOrderRepositoryIntegrationTests {
 
 	private DeliveryOrderRepository repository;

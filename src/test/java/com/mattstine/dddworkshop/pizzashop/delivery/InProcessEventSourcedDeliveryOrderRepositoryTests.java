@@ -6,6 +6,7 @@ import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Matt Stine
  */
+@Ignore
 public class InProcessEventSourcedDeliveryOrderRepositoryTests {
 
 	private DeliveryOrderRepository repository;
