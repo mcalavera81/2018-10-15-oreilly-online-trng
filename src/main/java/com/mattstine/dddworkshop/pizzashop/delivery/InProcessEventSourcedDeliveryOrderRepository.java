@@ -3,7 +3,7 @@ package com.mattstine.dddworkshop.pizzashop.delivery;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.adapters.InProcessEventSourcedRepository;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 
 /**
  * @author Matt Stine
@@ -20,7 +20,7 @@ final class InProcessEventSourcedDeliveryOrderRepository extends InProcessEventS
 	}
 
 	@Override
-	public DeliveryOrder findByKitchenOrderRef(KitchenOrderRef kitchenOrderRef) {
+	public DeliveryOrder findByKitchenOrderRef(KitchenOrder.KitchenOrderRef kitchenOrderRef) {
 		return null;
 	}
 }

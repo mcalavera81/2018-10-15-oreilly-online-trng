@@ -1,6 +1,11 @@
 package com.mattstine.dddworkshop.pizzashop.suites;
 
-import com.mattstine.dddworkshop.pizzashop.kitchen.*;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.KitchenOrderTests;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.PizzaTests;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedKitchenOrderRepositoryIntegrationTests;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedKitchenOrderRepositoryTests;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedPizzaRepositoryIntegrationTests;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedPizzaRepositoryTests;
 import com.mattstine.lab.infrastructure.*;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;

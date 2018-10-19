@@ -1,7 +1,7 @@
 package com.mattstine.dddworkshop.pizzashop.delivery;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenService;
 import com.mattstine.dddworkshop.pizzashop.ordering.OrderingService;
 
@@ -21,7 +21,7 @@ final class DeliveryService {
 		this.kitchenService = kitchenService;
 	}
 
-	DeliveryOrder findDeliveryOrderByKitchenOrderRef(KitchenOrderRef kitchenOrderRef) {
+	DeliveryOrder findDeliveryOrderByKitchenOrderRef(KitchenOrder.KitchenOrderRef kitchenOrderRef) {
 		return null;
 	}
 }

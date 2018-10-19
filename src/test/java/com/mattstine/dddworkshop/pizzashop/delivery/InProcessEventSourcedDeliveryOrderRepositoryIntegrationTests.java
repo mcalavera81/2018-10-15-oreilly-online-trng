@@ -2,7 +2,7 @@ package com.mattstine.dddworkshop.pizzashop.delivery;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.After;
@@ -22,7 +22,7 @@ public class InProcessEventSourcedDeliveryOrderRepositoryIntegrationTests {
 	private DeliveryOrderRepository repository;
 	private InProcessEventLog eventLog;
 	private DeliveryOrder deliveryOrder;
-	private KitchenOrderRef kitchenOrderRef;
+	private KitchenOrder.KitchenOrderRef kitchenOrderRef;
 
 	@Before
 	public void setUp() {
@@ -30,7 +30,7 @@ public class InProcessEventSourcedDeliveryOrderRepositoryIntegrationTests {
 		repository = new InProcessEventSourcedDeliveryOrderRepository(eventLog,
 				new Topic("delivery_orders"));
 		DeliveryOrderRef ref = repository.nextIdentity();
-		kitchenOrderRef = new KitchenOrderRef();
+		kitchenOrderRef = new KitchenOrder.KitchenOrderRef();
 		deliveryOrder = DeliveryOrder.builder()
 				.ref(ref)
 				.kitchenOrderRef(kitchenOrderRef)

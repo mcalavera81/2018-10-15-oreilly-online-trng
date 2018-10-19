@@ -2,6 +2,12 @@ package com.mattstine.dddworkshop.pizzashop.kitchen;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.Pizza;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedKitchenOrderRepository;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.InProcessEventSourcedPizzaRepository;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.KitchenOrderRepository;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.PizzaRepository;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderPaidEvent;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
@@ -26,7 +32,7 @@ public class KitchenServiceIntegrationTests {
 	private OrderingService orderingService;
 	private KitchenOrderRepository kitchenOrderRepository;
 	private PizzaRepository pizzaRepository;
-	private KitchenOrderRef kitchenOrderRef;
+	private KitchenOrder.KitchenOrderRef kitchenOrderRef;
 	private KitchenOrder kitchenOrder;
 
 	@Before
@@ -166,7 +172,7 @@ public class KitchenServiceIntegrationTests {
 		Pizza pizza = kitchenService.findPizzasByKitchenOrderRef(kitchenOrderRef).stream()
 				.findFirst().get();
 
-		PizzaRef ref = pizza.getRef();
+		Pizza.PizzaRef ref = pizza.getRef();
 		kitchenService.finishPizzaPrep(ref);
 		pizza = kitchenService.findPizzaByRef(ref);
 

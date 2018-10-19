@@ -1,10 +1,13 @@
-package com.mattstine.dddworkshop.pizzashop.kitchen;
+package com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates;
 
+import com.mattstine.dddworkshop.pizzashop.infrastructure.domain.services.RefStringGenerator;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Aggregate;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.AggregateState;
+import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Ref;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.*;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import lombok.Builder;
 import lombok.NonNull;
@@ -49,7 +52,7 @@ public final class KitchenOrder implements Aggregate {
         return this.state == State.NEW;
     }
 
-    void startPrep() {
+    public void startPrep() {
         if (!this.isNew()) {
             throw new IllegalStateException();
         }
@@ -58,11 +61,11 @@ public final class KitchenOrder implements Aggregate {
         this.$eventLog.publish(new Topic("kitchen_orders"), new KitchenOrderPrepStartedEvent(this.ref));
     }
 
-    boolean isPrepping() {
+    public boolean isPrepping() {
         return this.state == State.PREPPING;
     }
 
-    void startBake() {
+    public void startBake() {
         if (!this.isPrepping()) {
             throw new IllegalStateException();
         }
@@ -71,11 +74,11 @@ public final class KitchenOrder implements Aggregate {
         this.$eventLog.publish(new Topic("kitchen_orders"), new KitchenOrderBakeStartedEvent(this.ref));
     }
 
-    boolean isBaking() {
+    public boolean isBaking() {
         return this.state == State.BAKING;
     }
 
-    void startAssembly() {
+    public void startAssembly() {
         if (!this.isBaking()) {
             throw new IllegalStateException();
         }
@@ -84,11 +87,11 @@ public final class KitchenOrder implements Aggregate {
         this.$eventLog.publish(new Topic("kitchen_orders"), new KitchenOrderAssemblyStartedEvent(this.ref));
     }
 
-    boolean hasStartedAssembly() {
+    public boolean hasStartedAssembly() {
         return this.state == State.ASSEMBLING;
     }
 
-    void finishAssembly() {
+    public void finishAssembly() {
         if (!this.hasStartedAssembly()) {
             throw new IllegalStateException();
         }
@@ -97,7 +100,7 @@ public final class KitchenOrder implements Aggregate {
         this.$eventLog.publish(new Topic("kitchen_orders"), new KitchenOrderAssemblyFinishedEvent(this.ref));
     }
 
-    boolean hasFinishedAssembly() {
+    public boolean hasFinishedAssembly() {
         return this.state == State.ASSEMBLED;
     }
 
@@ -177,9 +180,32 @@ public final class KitchenOrder implements Aggregate {
     }
 
     @Value
-    static class OrderState implements AggregateState {
+    public static class OrderState implements AggregateState {
         KitchenOrderRef ref;
         OnlineOrderRef onlineOrderRef;
         List<Pizza> pizzas;
+    }
+
+    /**
+     * @author Matt Stine
+     */
+    @Value
+    public static final class KitchenOrderRef implements Ref {
+        public static final KitchenOrderRef IDENTITY = new KitchenOrderRef("");
+        private String reference;
+
+        public KitchenOrderRef() {
+            this.reference = RefStringGenerator.generateRefString();
+        }
+
+        @SuppressWarnings("SameParameterValue")
+        private KitchenOrderRef(String reference) {
+            this.reference = reference;
+        }
+
+        @Override
+        public String getReference() {
+            return reference;
+        }
     }
 }

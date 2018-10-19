@@ -4,7 +4,7 @@ import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Aggregate;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.AggregateState;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Ref;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import lombok.Builder;
 import lombok.NonNull;
@@ -22,7 +22,7 @@ public final class DeliveryOrder implements Aggregate {
 
 	@Builder
 	private DeliveryOrder(@NonNull DeliveryOrderRef ref,
-						  @NonNull KitchenOrderRef kitchenOrderRef,
+						  @NonNull KitchenOrder.KitchenOrderRef kitchenOrderRef,
 						  @NonNull OnlineOrderRef onlineOrderRef,
 						  @Singular List<Pizza> pizzas,
 						  @NonNull EventLog eventLog) {

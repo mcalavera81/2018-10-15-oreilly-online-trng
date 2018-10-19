@@ -1,7 +1,7 @@
 package com.mattstine.dddworkshop.pizzashop.delivery;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class DeliveryOrderTests {
 		ref = new DeliveryOrderRef();
 		deliveryOrder = DeliveryOrder.builder()
 				.ref(ref)
-				.kitchenOrderRef(new KitchenOrderRef())
+				.kitchenOrderRef(new KitchenOrder.KitchenOrderRef())
 				.onlineOrderRef(new OnlineOrderRef())
 				.pizza(DeliveryOrder.Pizza.builder().size(DeliveryOrder.Pizza.Size.MEDIUM).build())
 				.eventLog(eventLog)

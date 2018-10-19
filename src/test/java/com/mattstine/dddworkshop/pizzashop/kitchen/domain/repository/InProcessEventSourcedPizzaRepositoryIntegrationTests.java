@@ -1,7 +1,9 @@
-package com.mattstine.dddworkshop.pizzashop.kitchen;
+package com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.Pizza;
 import com.mattstine.lab.infrastructure.Lab5Tests;
 import org.junit.After;
 import org.junit.Before;
@@ -18,15 +20,15 @@ public class InProcessEventSourcedPizzaRepositoryIntegrationTests {
 	private PizzaRepository repository;
 	private InProcessEventLog eventLog;
 	private Pizza pizza;
-	private KitchenOrderRef kitchenOrderRef;
+	private KitchenOrder.KitchenOrderRef kitchenOrderRef;
 
 	@Before
 	public void setUp() {
 		eventLog = InProcessEventLog.instance();
 		repository = new InProcessEventSourcedPizzaRepository(eventLog,
 				new Topic("pizzas"));
-		PizzaRef ref = repository.nextIdentity();
-		kitchenOrderRef = new KitchenOrderRef();
+		Pizza.PizzaRef ref = repository.nextIdentity();
+		kitchenOrderRef = new KitchenOrder.KitchenOrderRef();
 		pizza = Pizza.builder()
 				.ref(ref)
 				.kitchenOrderRef(kitchenOrderRef)

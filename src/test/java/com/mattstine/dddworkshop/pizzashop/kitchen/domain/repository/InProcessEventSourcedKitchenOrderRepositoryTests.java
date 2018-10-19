@@ -1,7 +1,9 @@
-package com.mattstine.dddworkshop.pizzashop.kitchen;
+package com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.*;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab3Tests;
 import com.mattstine.lab.infrastructure.Lab4Tests;
@@ -19,7 +21,7 @@ public class InProcessEventSourcedKitchenOrderRepositoryTests {
 
     private KitchenOrderRepository repository;
     private EventLog eventLog;
-    private KitchenOrderRef ref;
+    private KitchenOrder.KitchenOrderRef ref;
     private KitchenOrder kitchenOrder;
 
     @Before

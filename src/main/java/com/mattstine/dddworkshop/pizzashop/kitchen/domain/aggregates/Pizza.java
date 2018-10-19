@@ -1,10 +1,13 @@
-package com.mattstine.dddworkshop.pizzashop.kitchen;
+package com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates;
 
+import com.mattstine.dddworkshop.pizzashop.infrastructure.domain.services.RefStringGenerator;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Aggregate;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.AggregateState;
+import com.mattstine.dddworkshop.pizzashop.infrastructure.repository.ports.Ref;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.*;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
@@ -15,7 +18,7 @@ import java.util.function.BiFunction;
 @Value
 public final class Pizza implements Aggregate {
     PizzaRef ref;
-    KitchenOrderRef kitchenOrderRef;
+    KitchenOrder.KitchenOrderRef kitchenOrderRef;
     Size size;
     EventLog $eventLog;
     @NonFinal
@@ -23,7 +26,7 @@ public final class Pizza implements Aggregate {
 
     @Builder
     private Pizza(@NonNull PizzaRef ref,
-                  @NonNull KitchenOrderRef kitchenOrderRef,
+                  @NonNull KitchenOrder.KitchenOrderRef kitchenOrderRef,
                   @NonNull Size size,
                   @NonNull EventLog eventLog) {
         this.ref = ref;
@@ -49,7 +52,7 @@ public final class Pizza implements Aggregate {
         return this.state == State.NEW;
     }
 
-    void startPrep() {
+    public void startPrep() {
         if (!this.isNew()) {
             throw new IllegalStateException();
         }
@@ -58,11 +61,11 @@ public final class Pizza implements Aggregate {
         this.$eventLog.publish(new Topic("pizzas"), new PizzaPrepStartedEvent(this.ref));
     }
 
-    boolean isPrepping() {
+    public boolean isPrepping() {
         return this.state == State.PREPPING;
     }
 
-    void finishPrep() {
+    public void finishPrep() {
         if (!this.isPrepping()) {
             throw new IllegalStateException();
         }
@@ -71,11 +74,11 @@ public final class Pizza implements Aggregate {
         this.$eventLog.publish(new Topic("pizzas"), new PizzaPrepFinishedEvent(this.ref));
     }
 
-    boolean hasFinishedPrep() {
+    public boolean hasFinishedPrep() {
         return this.state == State.PREPPED;
     }
 
-    void startBake() {
+    public void startBake() {
         if (!this.hasFinishedPrep()) {
             throw new IllegalStateException();
         }
@@ -84,11 +87,11 @@ public final class Pizza implements Aggregate {
         this.$eventLog.publish(new Topic("pizzas"), new PizzaBakeStartedEvent(this.ref));
     }
 
-    boolean isBaking() {
+    public boolean isBaking() {
         return this.state == State.BAKING;
     }
 
-    void finishBake() {
+    public void finishBake() {
         if (!this.isBaking()) {
             throw new IllegalStateException();
         }
@@ -97,7 +100,7 @@ public final class Pizza implements Aggregate {
         this.$eventLog.publish(new Topic("pizzas"), new PizzaBakeFinishedEvent(this.ref));
     }
 
-    boolean hasFinishedBaking() {
+    public boolean hasFinishedBaking() {
         return this.state == State.BAKED;
     }
 
@@ -106,7 +109,7 @@ public final class Pizza implements Aggregate {
         return Pizza.builder()
                 .ref(PizzaRef.IDENTITY)
                 .eventLog(EventLog.IDENTITY)
-                .kitchenOrderRef(KitchenOrderRef.IDENTITY)
+                .kitchenOrderRef(KitchenOrder.KitchenOrderRef.IDENTITY)
                 .size(Size.IDENTITY)
                 .build();
     }
@@ -126,11 +129,11 @@ public final class Pizza implements Aggregate {
         return new PizzaState(this.ref, this.kitchenOrderRef, this.size);
     }
 
-    enum Size {
+    public enum Size {
         IDENTITY, SMALL, MEDIUM, LARGE
     }
 
-    enum State {
+    public enum State {
         NEW,
         PREPPING,
         PREPPED,
@@ -169,9 +172,32 @@ public final class Pizza implements Aggregate {
     }
 
     @Value
-    static class PizzaState implements AggregateState {
+    public static class PizzaState implements AggregateState {
         PizzaRef ref;
-        KitchenOrderRef kitchenOrderRef;
+        KitchenOrder.KitchenOrderRef kitchenOrderRef;
         Size size;
+    }
+
+    /**
+     * @author Matt Stine
+     */
+    @Value
+    public static final class PizzaRef implements Ref {
+        public static final PizzaRef IDENTITY = new PizzaRef("");
+        String reference;
+
+        public PizzaRef() {
+            this.reference = RefStringGenerator.generateRefString();
+        }
+
+        @SuppressWarnings("SameParameterValue")
+        private PizzaRef(String reference) {
+            this.reference = reference;
+        }
+
+        @Override
+        public String getReference() {
+            return reference;
+        }
     }
 }

@@ -2,6 +2,14 @@ package com.mattstine.dddworkshop.pizzashop.kitchen;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.Pizza;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.KitchenOrderPrepStartedEvent;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.PizzaBakeFinishedEvent;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.PizzaBakeStartedEvent;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.PizzaPrepFinishedEvent;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.KitchenOrderRepository;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.repository.PizzaRepository;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderPaidEvent;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
@@ -51,7 +59,7 @@ final class DefaultKitchenService implements KitchenService {
 			} else if (e instanceof PizzaBakeFinishedEvent) {
 				PizzaBakeFinishedEvent pbfe = (PizzaBakeFinishedEvent) e;
 				Pizza pizza = pizzaRepository.findByRef(pbfe.getRef());
-				KitchenOrderRef kitchenOrderRef = pizza.getKitchenOrderRef();
+				KitchenOrder.KitchenOrderRef kitchenOrderRef = pizza.getKitchenOrderRef();
 				KitchenOrder kitchenOrder = kitchenOrderRepository.findByRef(kitchenOrderRef);
 
 				if (kitchenOrder.isBaking()) {
@@ -67,25 +75,25 @@ final class DefaultKitchenService implements KitchenService {
 	}
 
 	@Override
-	public void startOrderPrep(KitchenOrderRef kitchenOrderRef) {
+	public void startOrderPrep(KitchenOrder.KitchenOrderRef kitchenOrderRef) {
 		KitchenOrder kitchenOrder = kitchenOrderRepository.findByRef(kitchenOrderRef);
 		kitchenOrder.startPrep();
 	}
 
 	@Override
-	public void finishPizzaPrep(PizzaRef ref) {
+	public void finishPizzaPrep(Pizza.PizzaRef ref) {
 		Pizza pizza = pizzaRepository.findByRef(ref);
 		pizza.finishPrep();
 	}
 
 	@Override
-	public void removePizzaFromOven(PizzaRef ref) {
+	public void removePizzaFromOven(Pizza.PizzaRef ref) {
 		Pizza pizza = pizzaRepository.findByRef(ref);
 		pizza.finishBake();
 	}
 
 	@Override
-	public KitchenOrder findKitchenOrderByRef(KitchenOrderRef kitchenOrderRef) {
+	public KitchenOrder findKitchenOrderByRef(KitchenOrder.KitchenOrderRef kitchenOrderRef) {
 		return kitchenOrderRepository.findByRef(kitchenOrderRef);
 	}
 
@@ -95,12 +103,12 @@ final class DefaultKitchenService implements KitchenService {
 	}
 
 	@Override
-	public Pizza findPizzaByRef(PizzaRef ref) {
+	public Pizza findPizzaByRef(Pizza.PizzaRef ref) {
 		return pizzaRepository.findByRef(ref);
 	}
 
 	@Override
-	public Set<Pizza> findPizzasByKitchenOrderRef(KitchenOrderRef kitchenOrderRef) {
+	public Set<Pizza> findPizzasByKitchenOrderRef(KitchenOrder.KitchenOrderRef kitchenOrderRef) {
 		return pizzaRepository.findPizzasByKitchenOrderRef(kitchenOrderRef);
 	}
 

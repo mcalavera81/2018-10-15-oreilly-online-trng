@@ -2,9 +2,8 @@ package com.mattstine.dddworkshop.pizzashop.delivery;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrder;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderAssemblyFinishedEvent;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.KitchenOrderAssemblyFinishedEvent;
 import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenService;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
@@ -49,7 +48,7 @@ public class DeliveryServiceIntegrationTests {
 	@Test
 	@Category(Lab7Tests.class)
 	public void on_kitchenOrderAssemblyFinished_add_to_queue() {
-		KitchenOrderRef kitchenOrderRef = new KitchenOrderRef();
+		KitchenOrder.KitchenOrderRef kitchenOrderRef = new KitchenOrder.KitchenOrderRef();
 		KitchenOrderAssemblyFinishedEvent kitchenOrderAssemblyFinishedEvent = new KitchenOrderAssemblyFinishedEvent(kitchenOrderRef);
 
 		OnlineOrderRef onlineOrderRef = new OnlineOrderRef();

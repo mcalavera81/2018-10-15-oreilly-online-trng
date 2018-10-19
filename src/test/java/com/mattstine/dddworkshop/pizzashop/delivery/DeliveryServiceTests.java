@@ -3,7 +3,7 @@ package com.mattstine.dddworkshop.pizzashop.delivery;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventHandler;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
-import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenOrderRef;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.kitchen.KitchenService;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.dddworkshop.pizzashop.ordering.OrderingService;
@@ -46,11 +46,11 @@ public class DeliveryServiceTests {
 	@Test
 	@Category(Lab7Tests.class)
 	public void should_return_deliveryOrder_by_kitchenOrderRef() {
-		KitchenOrderRef kitchenOrderRef = new KitchenOrderRef();
+		KitchenOrder.KitchenOrderRef kitchenOrderRef = new KitchenOrder.KitchenOrderRef();
 
 		DeliveryOrder deliveryOrder = DeliveryOrder.builder()
 				.ref(new DeliveryOrderRef())
-				.kitchenOrderRef(new KitchenOrderRef())
+				.kitchenOrderRef(new KitchenOrder.KitchenOrderRef())
 				.onlineOrderRef(new OnlineOrderRef())
 				.pizza(DeliveryOrder.Pizza.builder().size(DeliveryOrder.Pizza.Size.MEDIUM).build())
 				.eventLog(eventLog)

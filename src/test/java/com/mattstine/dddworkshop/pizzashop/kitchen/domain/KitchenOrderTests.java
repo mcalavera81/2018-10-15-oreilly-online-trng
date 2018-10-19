@@ -1,7 +1,9 @@
-package com.mattstine.dddworkshop.pizzashop.kitchen;
+package com.mattstine.dddworkshop.pizzashop.kitchen.domain;
 
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
+import com.mattstine.dddworkshop.pizzashop.kitchen.domain.events.*;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab1Tests;
 import com.mattstine.lab.infrastructure.Lab2Tests;
@@ -21,13 +23,13 @@ public class KitchenOrderTests {
 
     private KitchenOrder kitchenOrder;
     private EventLog eventLog;
-    private KitchenOrderRef ref;
+    private KitchenOrder.KitchenOrderRef ref;
     private OnlineOrderRef onlineOrderRef;
 
     @Before
     public void setUp() {
         eventLog = mock(EventLog.class);
-        ref = new KitchenOrderRef();
+        ref = new KitchenOrder.KitchenOrderRef();
         onlineOrderRef = new OnlineOrderRef();
         kitchenOrder = KitchenOrder.builder()
                 .ref(ref)
