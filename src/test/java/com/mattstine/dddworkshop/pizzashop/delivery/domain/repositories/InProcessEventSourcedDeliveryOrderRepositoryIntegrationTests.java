@@ -1,5 +1,7 @@
-package com.mattstine.dddworkshop.pizzashop.delivery;
+package com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories;
 
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrder;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrderRef;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
@@ -7,7 +9,6 @@ import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -16,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Matt Stine
  */
-@Ignore
 public class InProcessEventSourcedDeliveryOrderRepositoryIntegrationTests {
 
 	private DeliveryOrderRepository repository;

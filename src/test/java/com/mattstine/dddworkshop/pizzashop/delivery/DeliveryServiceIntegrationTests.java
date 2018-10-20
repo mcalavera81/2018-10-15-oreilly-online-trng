@@ -1,5 +1,8 @@
 package com.mattstine.dddworkshop.pizzashop.delivery;
 
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrder;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories.DeliveryOrderRepository;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories.InProcessEventSourcedDeliveryOrderRepository;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.adapters.InProcessEventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
@@ -11,7 +14,6 @@ import com.mattstine.dddworkshop.pizzashop.ordering.OrderingService;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -22,11 +24,10 @@ import static org.mockito.Mockito.when;
 /**
  * @author Matt Stine
  */
-@Ignore
 public class DeliveryServiceIntegrationTests {
 
 	private InProcessEventLog eventLog;
-	private DeliveryService deliveryService;
+	private DefaultDeliveryService deliveryService;
 	private OrderingService orderingService;
 	private KitchenService kitchenService;
 
@@ -37,7 +38,7 @@ public class DeliveryServiceIntegrationTests {
 				new Topic("delivery_orders"));
 		orderingService = mock(OrderingService.class);
 		kitchenService = mock(KitchenService.class);
-		deliveryService = new DeliveryService(eventLog, deliveryOrderRepository, orderingService, kitchenService);
+		deliveryService = new DefaultDeliveryService(eventLog, deliveryOrderRepository, orderingService, kitchenService);
 	}
 
 	@After

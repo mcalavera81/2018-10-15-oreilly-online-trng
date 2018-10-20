@@ -1,5 +1,8 @@
 package com.mattstine.dddworkshop.pizzashop.delivery;
 
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrder;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrderRef;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories.DeliveryOrderRepository;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventHandler;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
@@ -9,7 +12,6 @@ import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.dddworkshop.pizzashop.ordering.OrderingService;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -21,10 +23,9 @@ import static org.mockito.Mockito.*;
 /**
  * @author Matt Stine
  */
-@Ignore
 public class DeliveryServiceTests {
 
-	private DeliveryService service;
+	private DefaultDeliveryService service;
 	private EventLog eventLog;
 	private DeliveryOrderRepository deliveryOrderRepository;
 
@@ -34,7 +35,7 @@ public class DeliveryServiceTests {
 		deliveryOrderRepository = mock(DeliveryOrderRepository.class);
 		OrderingService orderingService = mock(OrderingService.class);
 		KitchenService kitchenService = mock(KitchenService.class);
-		service = new DeliveryService(eventLog, deliveryOrderRepository, orderingService, kitchenService);
+		service = new DefaultDeliveryService(eventLog, deliveryOrderRepository, orderingService, kitchenService);
 	}
 
 	@Test

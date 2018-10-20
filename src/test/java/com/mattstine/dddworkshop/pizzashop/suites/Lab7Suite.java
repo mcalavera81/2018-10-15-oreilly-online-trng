@@ -1,6 +1,9 @@
 package com.mattstine.dddworkshop.pizzashop.suites;
 
 import com.mattstine.dddworkshop.pizzashop.delivery.*;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrderTests;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories.InProcessEventSourcedDeliveryOrderRepositoryIntegrationTests;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories.InProcessEventSourcedDeliveryOrderRepositoryTests;
 import com.mattstine.dddworkshop.pizzashop.kitchen.*;
 import com.mattstine.dddworkshop.pizzashop.kitchen.domain.KitchenOrderTests;
 import com.mattstine.dddworkshop.pizzashop.kitchen.domain.PizzaTests;

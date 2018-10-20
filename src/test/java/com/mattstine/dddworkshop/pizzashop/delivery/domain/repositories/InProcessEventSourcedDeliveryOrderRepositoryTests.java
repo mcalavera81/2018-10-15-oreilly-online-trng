@@ -1,12 +1,14 @@
-package com.mattstine.dddworkshop.pizzashop.delivery;
+package com.mattstine.dddworkshop.pizzashop.delivery.domain.repositories;
 
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrder;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.aggregates.DeliveryOrderRef;
+import com.mattstine.dddworkshop.pizzashop.delivery.domain.events.DeliveryOrderAddedEvent;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.EventLog;
 import com.mattstine.dddworkshop.pizzashop.infrastructure.events.ports.Topic;
 import com.mattstine.dddworkshop.pizzashop.kitchen.domain.aggregates.KitchenOrder;
 import com.mattstine.dddworkshop.pizzashop.ordering.OnlineOrderRef;
 import com.mattstine.lab.infrastructure.Lab7Tests;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -19,7 +21,6 @@ import static org.mockito.Mockito.*;
 /**
  * @author Matt Stine
  */
-@Ignore
 public class InProcessEventSourcedDeliveryOrderRepositoryTests {
 
 	private DeliveryOrderRepository repository;
